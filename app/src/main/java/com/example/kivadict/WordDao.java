@@ -9,8 +9,8 @@ import java.util.List;
 @Dao
 public interface WordDao {
 
-    @Query("SELECT * FROM words ORDER BY word ASC")
-    LiveData<List<Word>>  getWords();
+    @Query("SELECT * FROM words WHERE word LIKE '%' || :searchQuery || '%' ")
+    LiveData<List<Word>>  getWords(String searchQuery);
 
 
 }

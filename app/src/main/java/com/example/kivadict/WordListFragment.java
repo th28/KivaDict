@@ -2,8 +2,12 @@ package com.example.kivadict;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import androidx.appcompat.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 public class WordListFragment extends Fragment {
 
     private WordListAdapter adapter;
+    private MenuItem searchItem;
+    private WordViewModel wordViewModel;
 
     public WordListFragment() {
 
@@ -34,22 +40,47 @@ public class WordListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
 
 
-
         return parentView;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-        WordViewModel wordViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
+                wordViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
                 .getInstance(getActivity().getApplication()))
                 .get(WordViewModel.class);
-        wordViewModel.getAllWords().observe(getViewLifecycleOwner(), words -> {
+        wordViewModel.getWords().observe(getViewLifecycleOwner(), words -> {
             adapter.submitList(words);
         });
 
+        setHasOptionsMenu(true);
 
     }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_word_list_fragment,menu);
+
+        searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                wordViewModel.searchQuery.setValue(newText);
+                return true;
+            }
+        });
+
+    }
+
 }
+
 
 

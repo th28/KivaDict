@@ -9,17 +9,16 @@ import java.util.List;
 public class WordRepository {
 
     private WordDao wordDao;
-    private LiveData<List<Word>> allWords;
+    private LiveData<List<Word>> myWords;
 
     WordRepository(Application application){
         WordRoomDatabase db = WordRoomDatabase.getDatabase(application);
         wordDao = db.wordDao();
-        allWords = wordDao.getWords();
     }
 
-    LiveData<List<Word>> getAllWords() {
+    LiveData<List<Word>> getWords(String s) {
 
-        return allWords;
+        return wordDao.getWords(s);
 
     }
 
