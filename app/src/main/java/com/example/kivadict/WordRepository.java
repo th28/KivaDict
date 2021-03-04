@@ -3,6 +3,7 @@ package com.example.kivadict;
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
+import androidx.paging.DataSource;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class WordRepository {
         wordDao = db.wordDao();
     }
 
-    LiveData<List<Word>> getWords(String s) {
+    DataSource.Factory<Integer, Word > getWords(String s) {
 
         return wordDao.getWords(s);
 

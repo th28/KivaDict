@@ -3,10 +3,11 @@ package com.example.kivadict;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
-public class WordListAdapter extends ListAdapter<Word, WordViewHolder> {
+public class WordListAdapter extends PagedListAdapter<Word, WordViewHolder> {
 
 
     protected WordListAdapter(@NonNull DiffUtil.ItemCallback<Word> diffCallback) {
@@ -22,14 +23,19 @@ public class WordListAdapter extends ListAdapter<Word, WordViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull WordViewHolder holder, int position) {
         Word current = getItem(position);
-        holder.bind(current.getWord());
+        if (current != null) {
+            holder.bind(current.getWord());
+        }
+        else{
+            holder.bind("Loading");
+        }
 
     }
     static class WordDiff extends DiffUtil.ItemCallback<Word> {
 
         @Override
         public boolean areItemsTheSame(@NonNull Word oldItem, @NonNull Word newItem) {
-            return oldItem == newItem;
+            return oldItem.getId() == newItem.getId();
         }
 
         @Override

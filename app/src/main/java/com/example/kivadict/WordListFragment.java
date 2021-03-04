@@ -7,6 +7,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
 import androidx.appcompat.widget.SearchView;
 
 import androidx.annotation.NonNull;
@@ -37,6 +39,7 @@ public class WordListFragment extends Fragment {
         RecyclerView recyclerView = parentView.findViewById(R.id.word_list);
         adapter = new WordListAdapter(new WordListAdapter.WordDiff());
         recyclerView.setAdapter(adapter);
+        recyclerView.setItemAnimator(null);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
 
 
@@ -46,12 +49,10 @@ public class WordListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-                wordViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
+        wordViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
                 .getInstance(getActivity().getApplication()))
                 .get(WordViewModel.class);
-        wordViewModel.getWords().observe(getViewLifecycleOwner(), words -> {
-            adapter.submitList(words);
-        });
+        wordViewModel.wordList.observe(getViewLifecycleOwner(), adapter::submitList);
 
         setHasOptionsMenu(true);
 
