@@ -1,3 +1,3 @@
 # KivaDict
-An open source Finnish dictionary for Android. 
+An open source, ad-free Finnish dictionary for Android. 
 
