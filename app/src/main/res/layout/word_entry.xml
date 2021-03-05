@@ -6,17 +6,35 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TestWord"
-        android:textSize="25sp"
+        android:textColor="@color/black"
+        android:textSize="20sp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
         android:id="@+id/word_txt"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Noun"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/pos_text"
+        />
 
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@+id/word_txt"
+        android:layout_below="@+id/glosses_list"
         android:background="?android:attr/listDivider" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="test1"
+        android:id="@+id/glosses_list"
+        android:layout_below="@id/word_txt"
+        android:layout_marginLeft="10dp"/>
 
 </RelativeLayout>

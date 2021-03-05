@@ -1,16 +1,21 @@
 package com.example.kivadict;
 
+import android.util.Log;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
-public class WordListAdapter extends PagedListAdapter<Word, WordViewHolder> {
+import java.util.ArrayList;
+import java.util.List;
+
+public class WordListAdapter extends PagedListAdapter<WordWithGlosses, WordViewHolder> {
 
 
-    protected WordListAdapter(@NonNull DiffUtil.ItemCallback<Word> diffCallback) {
+    protected WordListAdapter(@NonNull DiffUtil.ItemCallback<WordWithGlosses> diffCallback) {
         super(diffCallback);
     }
 
@@ -22,25 +27,31 @@ public class WordListAdapter extends PagedListAdapter<Word, WordViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull WordViewHolder holder, int position) {
-        Word current = getItem(position);
+        WordWithGlosses current = getItem(position);
+
+
         if (current != null) {
-            holder.bind(current.getWord());
+            holder.bind(current.getWord().getWord(),current.getWord().getPartOfSpeech(),current.getGlossesPreview());
         }
         else{
-            holder.bind("Loading");
+            ArrayList<String> LoadingGlosses = new ArrayList<>();
+            LoadingGlosses.add("Loading");
+            LoadingGlosses.add("Loading");
+            LoadingGlosses.add("Loading");
+            holder.bind("Loading","Loading", null);
         }
 
     }
-    static class WordDiff extends DiffUtil.ItemCallback<Word> {
+    static class WordDiff extends DiffUtil.ItemCallback<WordWithGlosses> {
 
         @Override
-        public boolean areItemsTheSame(@NonNull Word oldItem, @NonNull Word newItem) {
-            return oldItem.getId() == newItem.getId();
+        public boolean areItemsTheSame(@NonNull WordWithGlosses oldItem, @NonNull WordWithGlosses newItem) {
+            return oldItem.getWord().getId() == newItem.getWord().getId();
         }
 
         @Override
-        public boolean areContentsTheSame(@NonNull Word oldItem, @NonNull Word newItem) {
-            return oldItem.getWord().equals(newItem.getWord());
+        public boolean areContentsTheSame(@NonNull WordWithGlosses oldItem, @NonNull WordWithGlosses newItem) {
+            return oldItem.getWord().getWord().equals(newItem.getWord().getWord());
         }
     }
 

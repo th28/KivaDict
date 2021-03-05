@@ -17,10 +17,10 @@ public class WordRepository {
         wordDao = db.wordDao();
     }
 
-    DataSource.Factory<Integer, Word > getWords(String s) {
+    DataSource.Factory<Integer, WordWithGlosses> getWords(String searchQuery) {
 
-        return wordDao.getWords(s);
-
+        //return wordDao.getWords(s);
+        return wordDao.getWordWithGlosses(searchQuery);
     }
 
 }

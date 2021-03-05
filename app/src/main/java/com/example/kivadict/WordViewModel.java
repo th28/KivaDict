@@ -18,12 +18,12 @@ public class WordViewModel extends AndroidViewModel {
     private WordRepository wordRepository;
 
     MutableLiveData<String> searchQuery = new MutableLiveData<>("");
-    LiveData<PagedList<Word>> wordList;
+    LiveData<PagedList<WordWithGlosses>> wordList;
 
     public WordViewModel(@NonNull Application application) {
         super(application);
         wordRepository = new WordRepository(application);
-        wordList =  Transformations.switchMap(searchQuery, live -> {return new LivePagedListBuilder<Integer, Word>(wordRepository.getWords(live),10).build();});
+        wordList =  Transformations.switchMap(searchQuery, live -> {return new LivePagedListBuilder<Integer, WordWithGlosses>(wordRepository.getWords(live),10).build();});
     }
 
 }
