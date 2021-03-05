@@ -11,6 +11,7 @@ public class Word {
     @PrimaryKey
     @NonNull
     private int id;
+    @ColumnInfo(index = true)
     private String word;
     private String inflection;
     @ColumnInfo(name = "pos")

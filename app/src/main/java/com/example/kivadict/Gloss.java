@@ -11,7 +11,7 @@ public class Gloss {
     @PrimaryKey
     @NonNull
     private int id;
-    @ColumnInfo(name = "word_id")
+    @ColumnInfo(name = "word_id",index = true)
     private int wordId;
     private String gloss;
 

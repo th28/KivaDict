@@ -61,7 +61,7 @@ public class WordListFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_word_list_fragment,menu);
+        inflater.inflate(R.menu.menu_word_list_fragment, menu);
 
         searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
@@ -74,7 +74,12 @@ public class WordListFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                wordViewModel.searchQuery.setValue(newText);
+                if (newText.trim().length() > 0) {
+                    wordViewModel.searchQuery.setValue(newText);
+                }
+                else{
+                    wordViewModel.searchQuery.setValue("#");
+                }
                 return true;
             }
         });

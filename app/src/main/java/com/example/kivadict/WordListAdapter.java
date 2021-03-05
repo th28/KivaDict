@@ -51,7 +51,7 @@ public class WordListAdapter extends PagedListAdapter<WordWithGlosses, WordViewH
 
         @Override
         public boolean areContentsTheSame(@NonNull WordWithGlosses oldItem, @NonNull WordWithGlosses newItem) {
-            return oldItem.getWord().getWord().equals(newItem.getWord().getWord());
+            return true;
         }
     }
 

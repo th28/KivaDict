@@ -8,7 +8,8 @@ import java.util.List;
 
 public class WordWithGlosses {
 
-    @Embedded public Word word;
+    @Embedded
+    public Word word;
     @Relation(
             parentColumn = "id",
             entityColumn = "word_id"
@@ -24,21 +25,16 @@ public class WordWithGlosses {
         return word;
     }
 
-    public void setWord(Word word) {
-        this.word = word;
-    }
-
     public List<Gloss> getGlosses() {
 
         return glosses;
-
     }
 
-    public String getGlossesPreview(){
+    public String getGlossesPreview() {
 
         StringBuilder sb = new StringBuilder();
 
-        for (Gloss gloss: glosses){
+        for (Gloss gloss : glosses) {
 
             sb.append(gloss.getGloss());
             sb.append("\n");
@@ -46,10 +42,7 @@ public class WordWithGlosses {
         }
 
         return sb.toString();
-
     }
 
-    public void setGlosses(List<Gloss> glosses) {
-        this.glosses = glosses;
-    }
+
 }
