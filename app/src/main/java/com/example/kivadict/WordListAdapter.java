@@ -27,8 +27,8 @@ public class WordListAdapter extends PagedListAdapter<WordWithGlosses, WordViewH
 
     @Override
     public void onBindViewHolder(@NonNull WordViewHolder holder, int position) {
+        //WordWithGlosses current = getItem(position);
         WordWithGlosses current = getItem(position);
-
 
         if (current != null) {
             holder.bind(current.getWord().getWord(),current.getWord().getPartOfSpeech(),current.getGlossesPreview());

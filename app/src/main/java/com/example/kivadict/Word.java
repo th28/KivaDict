@@ -27,15 +27,12 @@ public class Word {
     public int getId() {
         return id;
     }
-
     public String getWord() {
         return word;
     }
-
     public String getInflection() {
         return inflection;
     }
-
     public String getPartOfSpeech() {
         return partOfSpeech;
     }

@@ -13,6 +13,7 @@ public class Gloss {
     private int id;
     @ColumnInfo(name = "word_id",index = true)
     private int wordId;
+    @ColumnInfo(index = true)
     private String gloss;
 
     public Gloss(int id, int wordId, String gloss) {

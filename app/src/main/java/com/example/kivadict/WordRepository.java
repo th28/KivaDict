@@ -19,8 +19,8 @@ public class WordRepository {
 
     DataSource.Factory<Integer, WordWithGlosses> getWords(String searchQuery) {
 
-        //return wordDao.getWords(s);
-        return wordDao.getWordWithGlosses(searchQuery);
+       return wordDao.getWordWithGlosses(searchQuery);
     }
+
 
 }
