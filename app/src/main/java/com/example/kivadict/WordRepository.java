@@ -1,6 +1,7 @@
 package com.example.kivadict;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.paging.DataSource;
@@ -18,9 +19,12 @@ public class WordRepository {
     }
 
     DataSource.Factory<Integer, WordWithGlosses> getWords(String searchQuery) {
-       String searchQueryFI =  ""
-       String searchQueryEN = ""
-       return wordDao.getWordWithGlosses(searchQuery);
+       String searchQueryFI =  String.format("\"^%s*\"",searchQuery);
+       Log.d("d",searchQueryFI);
+
+       String searchQueryEN =  String.format("\"%s\"",searchQuery);
+        Log.d("d",searchQueryEN);
+       return wordDao.getWordWithGlosses(searchQueryFI,searchQueryEN);
     }
 
 
