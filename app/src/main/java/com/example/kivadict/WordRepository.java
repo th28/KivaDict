@@ -18,7 +18,8 @@ public class WordRepository {
     }
 
     DataSource.Factory<Integer, WordWithGlosses> getWords(String searchQuery) {
-
+       String searchQueryFI =  ""
+       String searchQueryEN = ""
        return wordDao.getWordWithGlosses(searchQuery);
     }
 

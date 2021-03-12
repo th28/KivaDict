@@ -4,7 +4,7 @@ import androidx.room.Entity;
 import androidx.room.Fts4;
 
 @Fts4(contentEntity=Gloss.class)
-@Entity(tableName = "glossFts")
+@Entity(tableName = "glossesFts")
 public class GlossFts {
 
     private String gloss;

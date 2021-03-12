@@ -12,14 +12,20 @@ import java.util.List;
 public interface WordDao {
 
 
-
     @Transaction
-    @Query("SELECT * FROM words WHERE word LIKE  :searchQuery || '%' " +
+    @Query("SELECT words.* FROM words JOIN wordsFts ON words.id = wordsFts.docid WHERE wordsFts MATCH :searchQueryFI " +
             "UNION " +
-            "SELECT words.* FROM words  INNER JOIN glosses ON words.id = glosses.word_id WHERE glosses.gloss LIKE  :searchQuery || '%' ")
-    DataSource.Factory<Integer, WordWithGlosses > getWordWithGlosses(String searchQuery);
+            "SELECT words.* FROM words JOIN (SELECT glosses.* FROM glosses JOIN glossesFts ON glosses.id = glossesFts.docid WHERE glossesFts MATCH :searchQueryEN) as A ON A.word_id = words.id")
+    DataSource.Factory<Integer, WordWithGlosses > getWordWithGlosses(String searchQueryFI, String searchQueryEN);
 
 }
+/*
+"SELECT words.* FROM words JOIN wordsFts ON words.id = wordsFts.docid WHERE wordsFts MATCH '" + searchQueryFI + "' " +
+        "UNION " +
+        "SELECT words.* FROM words JOIN  (SELECT glosses.* FROM glosses JOIN glossesFts ON glosses.id = glossesFts.docid WHERE glossesFts MATCH '" + searchQueryEN + "') as A " +
+        "ON A.word_id = words.id"
+*/
+
 /*
 "SELECT * FROM words WHERE word LIKE  :searchQuery || '%' " +
         "UNION " +
