@@ -11,12 +11,14 @@ import java.util.List;
 @Dao
 public interface WordDao {
 
-
     @Transaction
     @Query("SELECT words.* FROM words JOIN wordsFts ON words.id = wordsFts.docid WHERE wordsFts MATCH :searchQueryFI " +
             "UNION " +
-            "SELECT words.* FROM words JOIN (SELECT glosses.* FROM glosses JOIN glossesFts ON glosses.id = glossesFts.docid WHERE glossesFts MATCH :searchQueryEN) as A ON A.word_id = words.id")
-    DataSource.Factory<Integer, WordWithGlosses > getWordWithGlosses(String searchQueryFI, String searchQueryEN);
+            "SELECT words.* FROM words JOIN (SELECT glosses.* FROM glosses JOIN glossesFts ON glosses.id = glossesFts.docid WHERE glossesFts MATCH :searchQueryEN) as A ON A.word_id = words.id " +
+            "UNION " +
+            "SELECT words.* from words WHERE words.word in (SELECT inflectionsFts.stem FROM inflectionsFts WHERE inflectionsFts.inflection MATCH :searchQueryINF) AND words.inflection IS NOT NULL")
+
+    DataSource.Factory<Integer, WordWithGlosses > getWordWithGlosses(String searchQueryFI, String searchQueryEN, String searchQueryINF);
 
 }
 /*

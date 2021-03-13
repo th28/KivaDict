@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".WordDetailFragment">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:text="TestWord"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        android:id="@+id/detail_word"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/detail_pos"
+        android:text="Noun"
+        android:layout_below="@id/detail_word"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Meanings"
+        android:layout_below="@id/detail_pos"
+        android:id="@+id/detail_meaning_txt"
+        android:layout_marginStart="15dp"
+        android:textSize="20sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="15dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/detail_meaning_txt"
+        android:layout_marginTop="10dp">
+
+    </LinearLayout>
+
+</RelativeLayout>

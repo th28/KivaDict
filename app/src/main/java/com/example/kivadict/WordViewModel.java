@@ -24,11 +24,9 @@ public class WordViewModel extends AndroidViewModel {
     public WordViewModel(@NonNull Application application) {
         super(application);
         wordRepository = new WordRepository(application);
-        if (searchQuery.getValue() != "") {
-            wordList = Transformations.switchMap(searchQuery, live -> {
+        wordList = Transformations.switchMap(searchQuery, live -> {
                 return new LivePagedListBuilder<Integer, WordWithGlosses>(wordRepository.getWords(live), 20).build();
             });
-        }
 
     }
 }

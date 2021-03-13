@@ -14,31 +14,29 @@ import java.util.List;
 
 public class WordListAdapter extends PagedListAdapter<WordWithGlosses, WordViewHolder> {
 
+    private OnItemClickListener listener;
 
-    protected WordListAdapter(@NonNull DiffUtil.ItemCallback<WordWithGlosses> diffCallback) {
+    protected WordListAdapter(@NonNull DiffUtil.ItemCallback<WordWithGlosses> diffCallback, OnItemClickListener listener) {
         super(diffCallback);
+        this.listener = listener;
     }
 
     @NonNull
     @Override
     public WordViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return WordViewHolder.create(parent);
+        return WordViewHolder.create(parent, listener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull WordViewHolder holder, int position) {
-        //WordWithGlosses current = getItem(position);
+
         WordWithGlosses current = getItem(position);
 
         if (current != null) {
-            holder.bind(current.getWord().getWord(),current.getWord().getPartOfSpeech(),current.getGlossesPreview());
+            holder.bind(current);
         }
         else{
-            ArrayList<String> LoadingGlosses = new ArrayList<>();
-            LoadingGlosses.add("Loading");
-            LoadingGlosses.add("Loading");
-            LoadingGlosses.add("Loading");
-            holder.bind("Loading","Loading", null);
+            holder.clear();
         }
 
     }

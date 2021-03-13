@@ -9,5 +9,18 @@
         android:id="@+id/wordListFragment"
         android:name="com.example.kivadict.WordListFragment"
         android:label="words_fragment"
-        tools:layout="@layout/words_fragment" />
+        tools:layout="@layout/words_fragment" >
+        <action
+            android:id="@+id/action_wordListFragment_to_wordDetailFragment2"
+            app:destination="@id/wordDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/wordDetailFragment"
+        android:name="com.example.kivadict.WordDetailFragment"
+        android:label="word_detail_fragment"
+        tools:layout="@layout/word_detail_fragment" >
+        <argument
+            android:name="wordWithGlosses"
+            app:argType="com.example.kivadict.WordWithGlosses" />
+    </fragment>
 </navigation>

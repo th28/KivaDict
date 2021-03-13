@@ -20,11 +20,10 @@ public class WordRepository {
 
     DataSource.Factory<Integer, WordWithGlosses> getWords(String searchQuery) {
        String searchQueryFI =  String.format("\"^%s*\"",searchQuery);
-       Log.d("d",searchQueryFI);
-
        String searchQueryEN =  String.format("\"%s\"",searchQuery);
-        Log.d("d",searchQueryEN);
-       return wordDao.getWordWithGlosses(searchQueryFI,searchQueryEN);
+       String searchQueryINF = String.format("\"%s\"",searchQuery);
+
+       return wordDao.getWordWithGlosses(searchQueryFI,searchQueryEN,searchQueryINF);
     }
 
 

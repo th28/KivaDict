@@ -15,14 +15,20 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class WordListFragment extends Fragment {
+import static com.example.kivadict.WordListFragmentDirections.actionWordListFragmentToWordDetailFragment2;
+
+public class WordListFragment extends Fragment implements OnItemClickListener {
 
     private WordListAdapter adapter;
     private MenuItem searchItem;
     private WordViewModel wordViewModel;
+    private RecyclerView recyclerView;
 
     public WordListFragment() {
 
@@ -36,8 +42,8 @@ public class WordListFragment extends Fragment {
 
         View parentView = inflater.inflate(R.layout.words_fragment, container, false);
 
-        RecyclerView recyclerView = parentView.findViewById(R.id.word_list);
-        adapter = new WordListAdapter(new WordListAdapter.WordDiff());
+        recyclerView = parentView.findViewById(R.id.word_list);
+        adapter = new WordListAdapter(new WordListAdapter.WordDiff(), this);
         recyclerView.setAdapter(adapter);
         recyclerView.setItemAnimator(null);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
@@ -75,10 +81,10 @@ public class WordListFragment extends Fragment {
             @Override
             public boolean onQueryTextChange(String newText) {
                 if (newText.trim().length() > 0) {
+                    recyclerView.setVisibility(View.VISIBLE);
                     wordViewModel.searchQuery.setValue(newText);
-                }
-                else{
-                    wordViewModel.searchQuery.setValue("#");
+                } else {
+                    recyclerView.setVisibility(View.GONE);
                 }
                 return true;
             }
@@ -86,6 +92,13 @@ public class WordListFragment extends Fragment {
 
     }
 
+    @Override
+    public void onItemClick(WordWithGlosses entry) {
+
+        NavDirections action = WordListFragmentDirections.actionWordListFragmentToWordDetailFragment2(entry);
+        NavHostFragment.findNavController(this).navigate(action);
+
+    }
 }
 
 
