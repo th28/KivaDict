@@ -11,14 +11,14 @@
         android:label="words_fragment"
         tools:layout="@layout/words_fragment" >
         <action
-            android:id="@+id/action_wordListFragment_to_wordDetailFragment2"
-            app:destination="@id/wordDetailFragment" />
+            android:id="@+id/action_wordListFragment_to_wordInfoContainerFragment"
+            app:destination="@id/wordInfoContainerFragment" />
     </fragment>
     <fragment
-        android:id="@+id/wordDetailFragment"
-        android:name="com.example.kivadict.WordDetailFragment"
-        android:label="word_detail_fragment"
-        tools:layout="@layout/word_detail_fragment" >
+        android:id="@+id/wordInfoContainerFragment"
+        android:name="com.example.kivadict.WordInfoContainerFragment"
+        android:label="viewpager_layout"
+        tools:layout="@layout/viewpager_layout" >
         <argument
             android:name="wordWithGlosses"
             app:argType="com.example.kivadict.WordWithGlosses" />

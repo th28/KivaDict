@@ -5,12 +5,12 @@ import androidx.room.Fts4;
 @Fts4(contentEntity = Inflection.class)
 @Entity(tableName = "inflectionsFts" )
 
-public class InflectionFts {
+public class InflectionsFts {
 
     private String inflection;
     private String stem;
 
-    public InflectionFts(String inflection) {
+    public InflectionsFts(String inflection) {
         this.inflection = inflection;
     }
     public String getInflection() {

@@ -6,10 +6,8 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-@Database(entities = {Word.class, Gloss.class, Inflection.class, WordFts.class, GlossFts.class, InflectionFts.class}, version = 1, exportSchema = false)
+@Database(entities = {Word.class, Gloss.class, Inflection.class, WordFts.class,
+        GlossFts.class, InflectionsFts.class, ExampleSentence.class, ExampleSentenceFts.class}, version = 1, exportSchema = false)
 public abstract class WordRoomDatabase extends RoomDatabase {
 
     public abstract WordDao wordDao();
@@ -22,7 +20,7 @@ public abstract class WordRoomDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             WordRoomDatabase.class, "words")
-                            .createFromAsset("db/dict.db")
+                            .createFromAsset("db/dict1.db")
                             .build();
                 }
             }

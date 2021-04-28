@@ -1,6 +1,7 @@
 package com.example.kivadict;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,12 +17,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavDirections;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import static com.example.kivadict.WordListFragmentDirections.actionWordListFragmentToWordDetailFragment2;
+import com.example.kivadict.WordListFragmentDirections;
+
+import java.util.concurrent.TimeUnit;
 
 public class WordListFragment extends Fragment implements OnItemClickListener {
 
@@ -31,9 +33,7 @@ public class WordListFragment extends Fragment implements OnItemClickListener {
     private RecyclerView recyclerView;
 
     public WordListFragment() {
-
         super(R.layout.words_fragment);
-
     }
 
     @Nullable
@@ -42,12 +42,14 @@ public class WordListFragment extends Fragment implements OnItemClickListener {
 
         View parentView = inflater.inflate(R.layout.words_fragment, container, false);
 
+        wordViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
+                .getInstance(getActivity().getApplication()))
+                .get(WordViewModel.class);
         recyclerView = parentView.findViewById(R.id.word_list);
-        adapter = new WordListAdapter(new WordListAdapter.WordDiff(), this);
+        adapter = new WordListAdapter(new WordListAdapter.WordDiff(), this, wordViewModel);
         recyclerView.setAdapter(adapter);
         recyclerView.setItemAnimator(null);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
-
 
         return parentView;
     }
@@ -55,13 +57,22 @@ public class WordListFragment extends Fragment implements OnItemClickListener {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-        wordViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
-                .getInstance(getActivity().getApplication()))
-                .get(WordViewModel.class);
-        wordViewModel.wordList.observe(getViewLifecycleOwner(), adapter::submitList);
+        RecyclerView.AdapterDataObserver observer = new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                recyclerView.scrollToPosition(0);
+            }
+        };
+
+        adapter.registerAdapterDataObserver(observer);
+
+        wordViewModel.wordList.observe(getViewLifecycleOwner(), list -> {
+            adapter.submitList(list);
+            recyclerView.post(() -> recyclerView.scrollToPosition(0));
+        });
 
         setHasOptionsMenu(true);
-
     }
 
     @Override
@@ -83,20 +94,21 @@ public class WordListFragment extends Fragment implements OnItemClickListener {
                 if (newText.trim().length() > 0) {
                     recyclerView.setVisibility(View.VISIBLE);
                     wordViewModel.searchQuery.setValue(newText);
+
                 } else {
                     recyclerView.setVisibility(View.GONE);
                 }
                 return true;
             }
         });
-
     }
 
     @Override
     public void onItemClick(WordWithGlosses entry) {
 
-        NavDirections action = WordListFragmentDirections.actionWordListFragmentToWordDetailFragment2(entry);
+        NavDirections action = WordListFragmentDirections.actionWordListFragmentToWordInfoContainerFragment(entry);
         NavHostFragment.findNavController(this).navigate(action);
+
 
     }
 }

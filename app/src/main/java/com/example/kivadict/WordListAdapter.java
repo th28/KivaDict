@@ -2,35 +2,34 @@ package com.example.kivadict;
 
 import android.util.Log;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.ListAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class WordListAdapter extends PagedListAdapter<WordWithGlosses, WordViewHolder> {
 
     private OnItemClickListener listener;
+    private WordViewModel wordViewModel;
 
-    protected WordListAdapter(@NonNull DiffUtil.ItemCallback<WordWithGlosses> diffCallback, OnItemClickListener listener) {
+    protected WordListAdapter(@NonNull DiffUtil.ItemCallback<WordWithGlosses> diffCallback, OnItemClickListener listener, WordViewModel wordViewModel) {
         super(diffCallback);
         this.listener = listener;
+        this.wordViewModel = wordViewModel;
     }
 
     @NonNull
     @Override
     public WordViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return WordViewHolder.create(parent, listener);
+        return WordViewHolder.create(parent, listener, wordViewModel);
     }
 
     @Override
     public void onBindViewHolder(@NonNull WordViewHolder holder, int position) {
 
         WordWithGlosses current = getItem(position);
+
+        //holder.setIsRecyclable(false);
 
         if (current != null) {
             holder.bind(current);

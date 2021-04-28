@@ -1,18 +1,16 @@
 package com.example.kivadict;
 
+
 import android.app.Application;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
-import androidx.paging.DataSource;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
-import java.util.List;
 
 public class WordViewModel extends AndroidViewModel {
 
